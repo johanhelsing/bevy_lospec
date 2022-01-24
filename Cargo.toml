@@ -1,0 +1,10 @@
+[package]
+name = "bevy_lospec"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = "0.6"
+serde = "1.0"
+serde_json = "1.0"
+anyhow = "1.0"

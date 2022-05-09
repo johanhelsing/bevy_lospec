@@ -42,6 +42,31 @@ fn lightness(color: &Color) -> u32 {
     }
 }
 
+fn manhattan_distance(lhs: &Color, rhs: &Color) -> u32 {
+    match (lhs, rhs) {
+        (
+            Color::Rgba {
+                red: lhs_red,
+                green: lhs_green,
+                blue: lhs_blue,
+                alpha: _,
+            },
+            Color::Rgba {
+                red: rhs_red,
+                green: rhs_green,
+                blue: rhs_blue,
+                alpha: _,
+            },
+        ) => {
+            let distance = (lhs_red - rhs_red).abs()
+                + (lhs_green - rhs_green).abs()
+                + (lhs_blue - rhs_blue).abs();
+            (distance * 256.) as u32
+        }
+        _ => todo!(),
+    }
+}
+
 impl Palette {
     pub fn lightest(&self) -> Color {
         *self.0.iter().max_by_key(|c| lightness(c)).unwrap()
@@ -49,6 +74,15 @@ impl Palette {
 
     pub fn darkest(&self) -> Color {
         *self.0.iter().min_by_key(|c| lightness(c)).unwrap()
+    }
+
+    pub fn closest(&self, color: Color) -> (usize, Color) {
+        self.0
+            .iter()
+            .enumerate()
+            .min_by_key(|(_i, c)| manhattan_distance(c, &color))
+            .map(|(i, c)| (i, c.to_owned()))
+            .unwrap()
     }
 
     pub fn iter(&self) -> impl Iterator<Item = &Color> {

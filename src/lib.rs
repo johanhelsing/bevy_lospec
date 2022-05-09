@@ -7,7 +7,7 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize, TypeUuid, Clone)]
 #[uuid = "777889bc-fb29-42bf-af78-da68fb5ba42d"]
-pub struct Palette(Vec<Color>);
+pub struct Palette(pub Vec<Color>);
 
 impl From<Vec<Color>> for Palette {
     fn from(colors: Vec<Color>) -> Self {

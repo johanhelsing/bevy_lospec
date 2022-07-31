@@ -1,16 +1,16 @@
 [package]
-name = "bevy_lospec"
-version = "0.1.1"
-edition = "2021"
-license = "MIT OR Apache-2.0"
 authors = ["Johan Helsing <johanhelsing@gmail.com>"]
-description = "Asset loader plugin for Bevy that adds support for lospec color palettes"
-keywords = ["gamedev", "bevy", "palette"]
 categories = ["game-development", "rendering", "graphics"]
+description = "Asset loader plugin for Bevy that adds support for lospec color palettes"
+edition = "2021"
+keywords = ["gamedev", "bevy", "palette"]
+license = "MIT OR Apache-2.0"
+name = "bevy_lospec"
 repository = "https://github.com/johanhelsing/bevy_lospec"
+version = "0.1.1"
 
 [dependencies]
-bevy = { version = "0.7", default-features = false, features = ["render"] }
+anyhow = "1.0"
+bevy = {version = "0.8", default-features = false, features = ["render", "bevy_asset"]}
 serde = "1.0"
 serde_json = "1.0"
-anyhow = "1.0"

@@ -10,7 +10,8 @@ I intend to support the `main` branch of Bevy in the `bevy-main` branch.
 
 |bevy|bevy_lospec|
 |---|---|
-|0.7|0.1, main|
+|0.8|0.2, main|
+|0.7|0.1|
 
 ## License
 

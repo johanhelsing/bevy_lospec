@@ -11,6 +11,9 @@ version = "0.3.0"
 
 [dependencies]
 anyhow = "1.0"
-bevy = {version = "0.9", default-features = false, features = ["render", "bevy_asset"]}
+bevy = {version = "0.10", default-features = false, features = [
+    "bevy_render", # for Color
+    "bevy_asset"
+]}
 serde = "1.0"
 serde_json = "1.0"

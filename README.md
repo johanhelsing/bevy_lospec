@@ -6,11 +6,10 @@ Asset loader plugin for Bevy that adds support for lospec color palette formats.
 
 The `main` branch targets the latest bevy release.
 
-I intend to support the `main` branch of Bevy in the `bevy-main` branch.
-
 |bevy|bevy_lospec|
 |---|---|
-|0.9|0.3, main|
+|0.10|0.4, main|
+|0.9|0.3|
 |0.8|0.2|
 |0.7|0.1|
 

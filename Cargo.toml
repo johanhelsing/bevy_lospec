@@ -7,7 +7,7 @@ keywords = ["gamedev", "bevy", "palette"]
 license = "MIT OR Apache-2.0"
 name = "bevy_lospec"
 repository = "https://github.com/johanhelsing/bevy_lospec"
-version = "0.3.0"
+version = "0.4.0"
 
 [dependencies]
 anyhow = "1.0"

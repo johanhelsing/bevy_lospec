@@ -3,11 +3,11 @@
 use bevy::{
     asset::{AssetLoader, LoadedAsset},
     prelude::*,
-    reflect::TypeUuid,
+    reflect::{TypePath, TypeUuid},
 };
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, TypeUuid, Clone)]
+#[derive(Debug, Deserialize, TypeUuid, Clone, TypePath)]
 #[uuid = "777889bc-fb29-42bf-af78-da68fb5ba42d"]
 pub struct Palette(pub Vec<Color>);
 

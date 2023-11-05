@@ -7,18 +7,9 @@ Asset loader plugin for Bevy that adds support for lospec color palette formats.
 Find a palette on <https://lospec.com>, note down the name.
 
 Download its json from: `https://lospec.com/palette-list/<palette-name>.json`
+and place it in the `assets` folder.
 
-Add the plugin:
-
-```rust
-app.add_plugins(PalettePlugin);
-```
-
-```rust
-let palette: Handle<Palette> = asset_server.load_asset("palette.json");
-```
-
-See the [`simple`](./examples/simple.rs) example for details
+See the [`simple`](./examples/simple.rs) example for details.
 
 ## Bevy version support
 

@@ -1,13 +1,14 @@
 #![doc = include_str!("../README.md")]
 
 use bevy::{
-    asset::{AssetLoader, LoadedAsset},
+    asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
     prelude::*,
     reflect::{TypePath, TypeUuid},
 };
 use serde::Deserialize;
+use thiserror::Error;
 
-#[derive(Debug, Deserialize, TypeUuid, Clone, TypePath)]
+#[derive(Asset, Debug, Deserialize, TypeUuid, Clone, TypePath)]
 #[uuid = "777889bc-fb29-42bf-af78-da68fb5ba42d"]
 pub struct Palette(pub Vec<Color>);
 
@@ -93,19 +94,33 @@ impl Palette {
 }
 
 #[derive(Default)]
-pub struct PaletteAssetLoader;
+pub struct PaletteLoader;
 
-impl AssetLoader for PaletteAssetLoader {
+#[non_exhaustive]
+#[derive(Debug, Error)]
+pub enum PaletteLoaderError {
+    #[error("Couldn't load palette: {0}")]
+    Io(#[from] std::io::Error),
+    #[error("Couldn't parse palette json: {0}")]
+    Json(#[from] serde_json::Error),
+}
+
+impl AssetLoader for PaletteLoader {
+    type Asset = Palette;
+    type Settings = ();
+    type Error = PaletteLoaderError;
     fn load<'a>(
         &'a self,
-        bytes: &'a [u8],
-        load_context: &'a mut bevy::asset::LoadContext,
-    ) -> bevy::asset::BoxedFuture<'a, anyhow::Result<(), anyhow::Error>> {
+        reader: &'a mut Reader,
+        _settings: &'a (),
+        _load_context: &'a mut LoadContext,
+    ) -> bevy::asset::BoxedFuture<'a, Result<Palette, PaletteLoaderError>> {
         Box::pin(async move {
-            let lospec: LospecJson = serde_json::from_slice(bytes)?;
+            let mut bytes = Vec::new();
+            reader.read_to_end(&mut bytes).await?;
+            let lospec: LospecJson = serde_json::from_slice(&bytes)?;
             let palette = Palette::from(lospec);
-            load_context.set_default_asset(LoadedAsset::new(palette));
-            Ok(())
+            Ok(palette)
         })
     }
 
@@ -119,8 +134,8 @@ pub struct PalettePlugin;
 
 impl Plugin for PalettePlugin {
     fn build(&self, app: &mut App) {
-        app.add_asset::<Palette>()
-            .init_asset_loader::<PaletteAssetLoader>();
+        app.init_asset::<Palette>()
+            .init_asset_loader::<PaletteLoader>();
     }
 }
 

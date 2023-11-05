@@ -7,13 +7,13 @@ keywords = ["gamedev", "bevy", "palette"]
 license = "MIT OR Apache-2.0"
 name = "bevy_lospec"
 repository = "https://github.com/johanhelsing/bevy_lospec"
-version = "0.5.0"
+version = "0.6.0"
 
 [dependencies]
-anyhow = "1.0"
-bevy = {version = "0.11", default-features = false, features = [
+thiserror = "1.0"
+bevy = { version = "0.12", default-features = false, features = [
     "bevy_render", # for Color
     "bevy_asset"
-]}
+] }
 serde = "1.0"
 serde_json = "1.0"

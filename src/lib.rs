@@ -4,10 +4,12 @@ use bevy::{
     asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
     prelude::*,
     reflect::{TypePath, TypeUuid},
+    render::color::HexColorError,
 };
 use serde::Deserialize;
 use thiserror::Error;
 
+/// A lospec palette, a collection of colors
 #[derive(Asset, Debug, Deserialize, TypeUuid, Clone, TypePath)]
 #[uuid = "777889bc-fb29-42bf-af78-da68fb5ba42d"]
 pub struct Palette(pub Vec<Color>);
@@ -103,6 +105,8 @@ pub enum PaletteLoaderError {
     Io(#[from] std::io::Error),
     #[error("Couldn't parse palette json: {0}")]
     Json(#[from] serde_json::Error),
+    #[error("Couldn't parse hex color: {0}")]
+    HexColor(#[from] HexColorError),
 }
 
 impl AssetLoader for PaletteLoader {
@@ -119,7 +123,7 @@ impl AssetLoader for PaletteLoader {
             let mut bytes = Vec::new();
             reader.read_to_end(&mut bytes).await?;
             let lospec: LospecJson = serde_json::from_slice(&bytes)?;
-            let palette = Palette::from(lospec);
+            let palette = Palette::try_from(lospec)?;
             Ok(palette)
         })
     }
@@ -144,17 +148,13 @@ struct LospecJson {
     pub colors: Vec<String>,
 }
 
-// TODO: should be TryFrom
-impl From<LospecJson> for Palette {
-    fn from(response: LospecJson) -> Self {
-        response
-            .colors
-            .iter()
-            .map(|c| match Color::hex(c) {
-                Ok(color) => color,
-                Err(_) => panic!("failed to parse color {} with length: {}", c, c.len()),
-            })
-            .collect::<Vec<Color>>()
-            .into()
+impl TryFrom<LospecJson> for Palette {
+    type Error = HexColorError;
+
+    fn try_from(value: LospecJson) -> Result<Self, Self::Error> {
+        let colors: Result<Vec<Color>, HexColorError> =
+            value.colors.iter().map(Color::hex).collect();
+
+        Ok(Self(colors?))
     }
 }

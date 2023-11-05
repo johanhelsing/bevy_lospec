@@ -2,13 +2,23 @@
 
 Asset loader plugin for Bevy that adds support for lospec color palette formats.
 
+## Usage
+
+Find a palette on <https://lospec.com>, note down the name.
+
+Download its json from: `https://lospec.com/palette-list/<palette-name>.json`
+and place it in the `assets` folder.
+
+See the [`simple`](./examples/simple.rs) example for details.
+
 ## Bevy version support
 
 The `main` branch targets the latest bevy release.
 
 |bevy|bevy_lospec|
 |----|-----------|
-|0.11|0.5, main  |
+|0.12|0.6, main  |
+|0.11|0.5        |
 |0.10|0.4        |
 |0.9 |0.3        |
 |0.8 |0.2        |

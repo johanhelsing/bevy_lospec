@@ -1,5 +1,9 @@
 # bevy_lospec
 
+[![crates.io](https://img.shields.io/crates/v/bevy_lospec.svg)](https://crates.io/crates/bevy_lospec)
+![MIT/Apache 2.0](https://img.shields.io/badge/license-MIT%2FApache-blue.svg)
+[![docs.rs](https://img.shields.io/docsrs/bevy_lospec)](https://docs.rs/bevy_lospec)
+
 Asset loader plugin for Bevy that adds support for lospec color palette formats.
 
 ## Usage

@@ -4,13 +4,12 @@ use bevy::{
     asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
     color::HexColorError,
     prelude::*,
-    reflect::TypePath,
 };
 use serde::Deserialize;
 use thiserror::Error;
 
 /// A lospec palette, a collection of colors
-#[derive(Asset, Debug, Deserialize, Clone, TypePath)]
+#[derive(Asset, Debug, Deserialize, Clone, Reflect)]
 pub struct Palette(pub Vec<Color>);
 
 impl From<Vec<Color>> for Palette {

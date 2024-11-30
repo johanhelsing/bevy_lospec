@@ -1,7 +1,7 @@
 #![doc = include_str!("../README.md")]
 
 use bevy::{
-    asset::{io::Reader, AssetLoader, AsyncReadExt, LoadContext},
+    asset::{io::Reader, AssetLoader, LoadContext},
     color::HexColorError,
     prelude::*,
 };
@@ -99,11 +99,12 @@ impl AssetLoader for PaletteLoader {
     type Asset = Palette;
     type Settings = ();
     type Error = PaletteLoaderError;
-    async fn load<'a>(
-        &'a self,
-        reader: &'a mut Reader<'_>,
-        _settings: &'a (),
-        _load_context: &'a mut LoadContext<'_>,
+
+    async fn load(
+        &self,
+        reader: &mut dyn Reader,
+        _settings: &Self::Settings,
+        _load_context: &mut LoadContext<'_>,
     ) -> Result<Palette, PaletteLoaderError> {
         let mut bytes = Vec::new();
         reader.read_to_end(&mut bytes).await?;

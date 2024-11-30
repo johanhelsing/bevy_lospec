@@ -24,7 +24,7 @@ fn main() {
 }
 
 fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d);
 }
 
 fn spawn_sprites(
@@ -43,16 +43,14 @@ fn spawn_sprites(
         let left_side = -((num_colors - 1) as f32 / 2.) * tile_size;
         for (i, &color) in palette.iter().enumerate() {
             info!("{color:?}");
-            // todo: spawn sprites here
-            commands.spawn(SpriteBundle {
-                transform: Transform::from_xyz(left_side + i as f32 * tile_size, 0., 0.),
-                sprite: Sprite {
+            commands.spawn((
+                Sprite {
                     color,
                     custom_size: Some(Vec2::splat(tile_size)),
                     ..default()
                 },
-                ..default()
-            });
+                Transform::from_xyz(left_side + i as f32 * tile_size, 0., 0.),
+            ));
         }
         *spawned = true;
     }

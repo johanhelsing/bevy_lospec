@@ -81,7 +81,7 @@ impl Palette {
     }
 }
 
-#[derive(Default)]
+#[derive(Default, Reflect)]
 pub struct PaletteLoader;
 
 #[non_exhaustive]

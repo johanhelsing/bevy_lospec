@@ -21,7 +21,8 @@ The `main` branch targets the latest bevy release.
 
 |bevy|bevy_lospec|
 |----|-----------|
-|0.19|0.13, main |
+|0.20|0.14, main |
+|0.19|0.13       |
 |0.18|0.12       |
 |0.17|0.11       |
 |0.16|0.10       |
